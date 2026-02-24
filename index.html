@@ -133,7 +133,7 @@
         
         <div class="mb-10">
             <img src="assets/img/logo.svg" class="w-28 md:w-32 mx-auto mb-4 brightness-0 invert opacity-90" alt="Logo">
-            <span class="ap-sub !text-white/50 !mb-0 font-medium tracking-[0.5em]">GKSBS Tanjungkarang</span>
+            <span class="ap-sub !text-white/50 !mb-0 font-medium">GKSBS TANJUNGKARANG</span>
         </div>
         
         <div class="mb-10">
@@ -145,19 +145,23 @@
             </p>
         </div>
 
-        <div class="w-full max-w-lg mx-auto flex flex-col items-center">
-            <div class="w-full flex items-center justify-center gap-8 md:gap-14 border-y border-white/10 py-8 backdrop-blur-[2px]">
+        <div class="w-full max-w-2xl mx-auto flex flex-col items-center">
+            <div class="w-full flex items-center justify-center gap-6 md:gap-10 border-y border-white/10 py-8 backdrop-blur-[2px]">
                 <div class="text-center text-white">
                     <span id="days" class="block text-4xl md:text-5xl font-light tracking-tighter">00</span>
-                    <span class="ap-sub !text-white/30 !mb-0 !text-[8px]">Hari</span>
+                    <span class="text-ap-body !text-white/60 font-medium uppercase tracking-widest text-[8px]">Hari</span>
                 </div>
-                <div class="text-center border-l border-white/10 pl-8 md:pl-14 text-white">
+                <div class="text-center border-l border-white/10 pl-6 md:pl-10 text-white">
                     <span id="hours" class="block text-4xl md:text-5xl font-light tracking-tighter">00</span>
-                    <span class="ap-sub !text-white/30 !mb-0 !text-[8px]">Jam</span>
+                    <span class="text-ap-body !text-white/60 font-medium uppercase tracking-widest text-[8px]">Jam</span>
                 </div>
-                <div class="text-center border-l border-white/10 pl-8 md:pl-14 text-white">
+                <div class="text-center border-l border-white/10 pl-6 md:pl-10 text-white">
                     <span id="minutes" class="block text-4xl md:text-5xl font-light tracking-tighter">00</span>
-                    <span class="ap-sub !text-white/30 !mb-0 !text-[8px]">Menit</span>
+                    <span class="text-ap-body !text-white/60 font-medium uppercase tracking-widest text-[8px]">Menit</span>
+                </div>
+                <div class="text-center border-l border-white/10 pl-6 md:pl-10 text-white">
+                    <span id="seconds" class="block text-4xl md:text-5xl font-light tracking-tighter text-gksbs-gold">00</span>
+                    <span class="text-ap-body !text-white/60 font-medium uppercase tracking-widest text-[8px]">Detik</span>
                 </div>
             </div>
 
@@ -167,7 +171,7 @@
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
                 <p class="text-[12px] font-medium tracking-[0.1em] text-white/80 uppercase">
-                    <span id="guestCount" class="font-bold">7</span> Jemaat Terkonfirmasi
+                    <span id="guestCount" class="font-bold">7</span> Jemaat Terkonfirmasi Hadir
                 </p>
             </div>
 
@@ -186,22 +190,26 @@
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        // Kalkulasi waktu
+        // Kalkulasi waktu (Hari, Jam, Menit, Detik)
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Update tampilan ke HTML
+        // Update tampilan ke HTML dengan format 00 (padStart)
         document.getElementById("days").innerText = days.toString().padStart(2, '0');
         document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
         document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
 
         // Jika waktu habis
         if (distance < 0) {
             clearInterval(countdown);
-            document.getElementById("days").innerText = "00";
-            document.getElementById("hours").innerText = "00";
-            document.getElementById("minutes").innerText = "00";
+            const expiredVal = "00";
+            document.getElementById("days").innerText = expiredVal;
+            document.getElementById("hours").innerText = expiredVal;
+            document.getElementById("minutes").innerText = expiredVal;
+            document.getElementById("seconds").innerText = expiredVal;
         }
     }, 1000);
 </script>
