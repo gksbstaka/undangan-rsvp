@@ -1,14 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Acara - GKSBS</title>
+    <title>GKSBS Event — Digital Invitation</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    // Default utama ke Inter (Sans Serif)
+                    // Serif hanya disiapkan sebagai class opsional
+                    sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    serif: ['Playfair Display', 'serif'],
+                },
+                fontSize: {
+                    // Apple-style typography scale
+                    'ap-hero': ['4.5rem', { lineHeight: '1.05', letterSpacing: '-0.025em', fontWeight: '700' }],
+                    'ap-title': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '600' }],
+                    'ap-body': ['1.0625rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+                    'ap-caption': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.05em', fontWeight: '600' }],
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    /* Reset & Master Typography */
+    body { 
+        @apply font-sans antialiased bg-ap-bg text-ap-black; 
+    }
+
+    /* Override semua heading ke Sans Serif secara default */
+    h1, h2, h3, h4, h5, h6 { 
+        @apply font-sans tracking-tight; 
+    }
+
+    /* Utility untuk panggil Serif secara kondisional (Manual) */
+    .font-conditional-serif { 
+        @apply font-serif italic; 
+    }
+
+    /* Sub-header style */
+    .ap-sub { 
+        @apply text-ap-caption uppercase tracking-[0.3em] text-ap-grey block mb-4; 
+    }
+</style>
     <style>
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Inter', sans-serif; }
+        /* Global Smoothing */
+        body {
+            background-color: #FBFBFD;
+            color: #1D1D1F;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Master UI Components */
+        .ap-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(210, 210, 215, 0.4);
+            border-radius: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .ap-btn-primary {
+            background-color: #0071E3;
+            color: #FFFFFF;
+            border-radius: 9999px;
+            padding: 12px 28px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ap-btn-primary:hover {
+            background-color: #0077ED;
+            transform: scale(1.02);
+        }
+        .ap-btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Input Style: Minimalist Apple */
+        .ap-input {
+            width: 100%;
+            background-color: #F5F5F7;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .ap-input:focus {
+            background-color: #FFFFFF;
+            border-color: #0071E3;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+        }
+
+        /* Micro-animations */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
     </style>
 </head>
 <body class="bg-[#FDFCF8] font-sans text-stone-800">
