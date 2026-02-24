@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan GKSBS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#FDFCF8] font-sans text-[#4A4A4A]">
+
+    <section class="min-h-screen flex flex-col items-center justify-center p-8 text-center bg-[#FDFCF8]">
+    <img src="assets/img/logo.svg" class="w-32 md:w-48 mb-8" alt="Logo">
+    
+    <p class="uppercase tracking-[0.4em] text-xs mb-4 text-[#8C7E6A]">GKSBS TANJUNGKARANG</p>
+    <h1 class="font-serif text-6xl md:text-8xl text-[#D4AF37] mb-8">Undangan Rapat</h1>
+
+    <div class="flex gap-4 md:gap-8 mb-12">
+        <div class="text-center">
+            <span id="days" class="block text-3xl md:text-5xl font-serif text-[#D4AF37]">00</span>
+            <span class="text-[10px] uppercase tracking-widest text-stone-500">Hari</span>
+        </div>
+        <div class="text-center">
+            <span id="hours" class="block text-3xl md:text-5xl font-serif text-[#D4AF37]">00</span>
+            <span class="text-[10px] uppercase tracking-widest text-stone-500">Jam</span>
+        </div>
+        <div class="text-center">
+            <span id="minutes" class="block text-3xl md:text-5xl font-serif text-[#D4AF37]">00</span>
+            <span class="text-[10px] uppercase tracking-widest text-stone-500">Menit</span>
+        </div>
+    </div>
+
+    <div class="mb-12 py-3 px-6 bg-white rounded-full shadow-sm border border-stone-100">
+        <p class="text-sm text-stone-600">
+            <span id="guestCount" class="font-bold text-[#D4AF37]">0</span> Orang telah konfirmasi hadir
+        </p>
+    </div>
+
+    <a href="main.html" class="px-10 py-4 bg-[#D4AF37] text-white rounded-full uppercase tracking-widest text-sm hover:bg-[#B8962E] transition-all">
+        Buka Undangan
+    </a>
+</section>
+<script>
+    // Set target waktu: 1 April 2026
+    const targetDate = new Date("April 1, 2026 09:00:00").getTime();
+
+    const countdown = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        // Kalkulasi waktu
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        // Update tampilan ke HTML
+        document.getElementById("days").innerText = days.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+
+        // Jika waktu habis
+        if (distance < 0) {
+            clearInterval(countdown);
+            document.getElementById("days").innerText = "00";
+            document.getElementById("hours").innerText = "00";
+            document.getElementById("minutes").innerText = "00";
+        }
+    }, 1000);
+</script>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx9pody7RG7SgrdaYoacSvxoLZ6ubMbmKWUsEIlxOW3-YxmMC4U5hAYpMQcph0U9K52/exec';
+
+    function updateGuestCount() {
+        fetch(scriptURL)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('guestCount').innerText = data;
+            })
+            .catch(error => console.error('Error ambil data tamu:', error));
+    }
+    updateGuestCount();
+</script>
+
+</body>
+</html>
