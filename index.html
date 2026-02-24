@@ -18,7 +18,7 @@
     <meta property="twitter:url" content="https://gksbstaka.github.io/undangan-rsvp/">
     <meta property="twitter:title" content="Undangan Rapat GKSBS Tanjungkarang">
     <meta property="twitter:description" content="Melayani dengan Kasih dan Kesetiaan dalam satu persekutuan.">
-    <meta property="twitter:image" content="https://gksbstaka.github.io/undangan-rsvp/assets/img/thumbnail.jpg">
+    <meta property="twitter:image" content="https://gksbstaka.github.io/undangan-rsvp/assets/img/thumbnail.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
@@ -161,9 +161,8 @@
             <h1 class="text-ap-title text-white tracking-[0.1em] !text-[45px]">
                 UNDANGAN <span class="font-sans font-semibold text-white/100">RAPAT</span>
             </h1>
-            <p class="mt-4 text-ap-body max-w-sm mx-auto font-medium text-white/50">
-                01 April 2026, 09:00 WIB<br>
-            </p>
+                <p id="event-time-info" class="mt-4 text-ap-body max-w-sm mx-auto font-light text-white/70">
+                </p>
         </div>
 
         <div class="w-full max-w-2xl mx-auto flex flex-col items-center">
@@ -204,26 +203,32 @@
     </div>
 </section>
 <script>
-    // Set target waktu: 1 April 2026
-    const targetDate = new Date("April 1, 2026 09:00:00").getTime();
+    const targetDateStr = "April 1, 2026 09:00:00";
+    const targetDate = new Date(targetDateStr).getTime();
+
+    function updateEventText() {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        const dateObj = new Date(targetDateStr);
+        const formattedDate = dateObj.toLocaleDateString('id-ID', options);
+        document.getElementById("event-time-info").innerText = formattedDate + " WIB";
+    }
+
+    updateEventText();
 
     const countdown = setInterval(function() {
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        // Kalkulasi waktu (Hari, Jam, Menit, Detik)
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Update tampilan ke HTML dengan format 00 (padStart)
         document.getElementById("days").innerText = days.toString().padStart(2, '0');
         document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
         document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
         document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
 
-        // Jika waktu habis
         if (distance < 0) {
             clearInterval(countdown);
             const expiredVal = "00";
@@ -231,22 +236,19 @@
             document.getElementById("hours").innerText = expiredVal;
             document.getElementById("minutes").innerText = expiredVal;
             document.getElementById("seconds").innerText = expiredVal;
+            document.getElementById("event-time-info").innerText = "Acara Sedang Berlangsung";
         }
     }, 1000);
 </script>
 <script>
-    // PASTIKAN URL INI ADALAH URL DEPLOYMENT TERBARU (HASIL NEW DEPLOYMENT)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxMDERfnXSaeGZU7rggHcvoTEhQWdrdDNX3tDUOrkq-80PytfM4wHgHQbrPAOeRLIQn/exec';
 
     function updateGuestCount() {
-        // Menambahkan parameter 'cache-buster' (t) agar browser selalu mengambil data terbaru, bukan dari memori lama
         const cacheBuster = new Date().getTime();
         const script = document.createElement('script');
         
-        // Kita gunakan teknik JSONP untuk melewati blokir CORS browser
         script.src = `${scriptURL}?callback=handleResponse&t=${cacheBuster}`;
         
-        // Menangani jika script gagal dimuat (misal URL salah atau server down)
         script.onerror = function() {
             console.error("Gagal memuat data dari Google Script. Cek URL Deployment kamu.");
         };
@@ -254,7 +256,6 @@
         document.body.appendChild(script);
     }
 
-    // Fungsi ini yang akan menerima data dari Google Apps Script
     function handleResponse(data) {
         const countElement = document.getElementById('guestCount');
         if (countElement && data && typeof data.count !== 'undefined') {
@@ -265,7 +266,6 @@
         }
     }
 
-    // Jalankan fungsi saat halaman selesai dimuat
     window.addEventListener('load', updateGuestCount);
 </script>
 
