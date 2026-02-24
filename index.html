@@ -74,16 +74,25 @@
 </script>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx9pody7RG7SgrdaYoacSvxoLZ6ubMbmKWUsEIlxOW3-YxmMC4U5hAYpMQcph0U9K52/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxMDERfnXSaeGZU7rggHcvoTEhQWdrdDNX3tDUOrkq-80PytfM4wHgHQbrPAOeRLIQn/exec';
 
     function updateGuestCount() {
-        fetch(scriptURL)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('guestCount').innerText = data;
-            })
-            .catch(error => console.error('Error ambil data tamu:', error));
+        // Kita gunakan teknik JSONP untuk melewati blokir CORS browser
+        const script = document.createElement('script');
+        script.src = `${scriptURL}?callback=handleResponse`;
+        document.body.appendChild(script);
     }
+
+    // Fungsi ini yang akan menerima data dari Google
+    function handleResponse(data) {
+        const countElement = document.getElementById('guestCount');
+        if (countElement) {
+            countElement.innerText = data.count;
+            console.log("Jumlah tamu terupdate:", data.count);
+        }
+    }
+
+    // Jalankan fungsi
     updateGuestCount();
 </script>
 
