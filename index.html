@@ -72,29 +72,41 @@
         }
     }, 1000);
 </script>
-
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx9pody7RG7SgrdaYoacSvxoLZ6ubMbmKWUsEIlxOW3-YxmMC4U5hAYpMQcph0U9K52/exec';
+    // PASTIKAN URL INI ADALAH URL DEPLOYMENT TERBARU (HASIL NEW DEPLOYMENT)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxMDERfnXSaeGZU7rggHcvoTEhQWdrdDNX3tDUOrkq-80PytfM4wHgHQbrPAOeRLIQn/exec';
 
     function updateGuestCount() {
-        // Kita gunakan teknik JSONP untuk melewati blokir CORS browser
+        // Menambahkan parameter 'cache-buster' (t) agar browser selalu mengambil data terbaru, bukan dari memori lama
+        const cacheBuster = new Date().getTime();
         const script = document.createElement('script');
-        script.src = `${scriptURL}?callback=handleResponse`;
+        
+        // Kita gunakan teknik JSONP untuk melewati blokir CORS browser
+        script.src = `${scriptURL}?callback=handleResponse&t=${cacheBuster}`;
+        
+        // Menangani jika script gagal dimuat (misal URL salah atau server down)
+        script.onerror = function() {
+            console.error("Gagal memuat data dari Google Script. Cek URL Deployment kamu.");
+        };
+
         document.body.appendChild(script);
     }
 
-    // Fungsi ini yang akan menerima data dari Google
+    // Fungsi ini yang akan menerima data dari Google Apps Script
     function handleResponse(data) {
         const countElement = document.getElementById('guestCount');
-        if (countElement) {
+        if (countElement && data && typeof data.count !== 'undefined') {
             countElement.innerText = data.count;
-            console.log("Jumlah tamu terupdate:", data.count);
+            console.log("Jumlah tamu berhasil diupdate secara LIVE:", data.count);
+        } else {
+            console.warn("Data diterima tapi formatnya tidak sesuai:", data);
         }
     }
 
-    // Jalankan fungsi
-    updateGuestCount();
+    // Jalankan fungsi saat halaman selesai dimuat
+    window.addEventListener('load', updateGuestCount);
 </script>
+
 
 </body>
 </html>
