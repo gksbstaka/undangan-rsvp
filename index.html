@@ -247,8 +247,10 @@
         const cacheBuster = new Date().getTime();
         const script = document.createElement('script');
         
+        // Kita gunakan teknik JSONP untuk melewati blokir CORS browser
         script.src = `${scriptURL}?callback=handleResponse&t=${cacheBuster}`;
         
+        // Menangani jika script gagal dimuat (misal URL salah atau server down)
         script.onerror = function() {
             console.error("Gagal memuat data dari Google Script. Cek URL Deployment kamu.");
         };
@@ -256,6 +258,7 @@
         document.body.appendChild(script);
     }
 
+    // Fungsi ini yang akan menerima data dari Google Apps Script
     function handleResponse(data) {
         const countElement = document.getElementById('guestCount');
         if (countElement && data && typeof data.count !== 'undefined') {
@@ -266,6 +269,7 @@
         }
     }
 
+    // Jalankan fungsi saat halaman selesai dimuat
     window.addEventListener('load', updateGuestCount);
 </script>
 
