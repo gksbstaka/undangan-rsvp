@@ -172,7 +172,7 @@
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
                 <p class="text-[12px] font-medium tracking-[0.1em] text-white/80 uppercase">
-                    <span id="guestCount" class="font-bold">7</span> Jemaat Terkonfirmasi Hadir
+                    <span id="guestCount" class="font-bold">0</span> Jemaat Terkonfirmasi Hadir
                 </p>
             </div>
 
@@ -248,7 +248,9 @@
         }
     }
 
-    window.addEventListener('load', updateGuestCount);
+    window.addEventListener('DOMContentLoaded', updateGuestCount);
+setInterval(updateGuestCount, 15000); // tiap 15 detik
+
 </script>
 
 </body>
