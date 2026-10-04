@@ -108,21 +108,20 @@
 
   <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
     
-    <style>
-        :root {
-    --overlay-start: rgba(10, 10, 8, 0.48);
-    --overlay-end: rgba(126, 86, 18, 0.82);
-}
-    </style>
-
     <div class="absolute inset-0 z-0">
-        <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-95">
-            <source src="assets/video/herovid.mp4" type="video/mp4">
-        </video>
-        <div class="absolute inset-0 z-10" 
-             style="background: linear-gradient(to bottom, var(--overlay-start), var(--overlay-end));">
-        </div>
+    <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-95">
+        <source src="assets/video/herovid.mp4" type="video/mp4">
+    </video>
+
+    <div class="absolute inset-0 z-10"
+         style="background: linear-gradient(
+             to bottom,
+             rgba(10, 10, 8, 0.50) 0%,
+             rgba(60, 45, 20, 0.42) 45%,
+             rgba(126, 86, 18, 0.82) 100%
+         );">
     </div>
+</div>
 
     <div class="relative z-20 flex flex-col items-center text-center p-6 reveal">
         
